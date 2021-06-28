@@ -8,7 +8,7 @@ import datetime as dt
 import os
 
 
-class Syndication(object):
+class Healtheintent(object):
 
     def __init__(self):
 
@@ -26,6 +26,12 @@ class Syndication(object):
         if method == 'GET':
             return requests.get('{uri}{endpoint}'.format(uri=self.uri, endpoint=endpoint), headers=headers,
                                 params=params).json()
+        elif method == 'DELETE':
+            return requests.delete('{uri}{endpoint}'.format(uri=self.uri, endpoint=endpoint),
+                                   headers=headers, params=params)
+        elif method == 'POST':
+            return requests.post('{uri}{endpoint}'.format(uri=self.uri, endpoint=endpoint),
+                                   headers=headers, params=params)
         else:
             return requests.get('{uri}{endpoint}'.format(uri=self.uri, endpoint=endpoint), headers=headers,
                                     json=json)
@@ -138,6 +144,6 @@ class Syndication(object):
 
 
 if __name__ == '__main__':
-    s = Syndication()
-    s.get_channel_downloads(delivery_id=banana,destination_path=TEST_PATH)
+    h = Healtheintent()
+    #h.get_channel_downloads(delivery_id=banana,destination_path=TEST_PATH)
 
