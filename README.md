@@ -1,5 +1,7 @@
 # Cerner-HealtheIntent
-HealtheIntent open development services allow access to population health concepts using RESTful APIs.
+HealtheIntent open development services allow access to population health concepts using RESTful APIs. 
+
+>[HealtheIntent Documentation](https://docs.healtheintent.com/)
 
 This repository contains a Python wrapper for a number of Cerner Open Code APIs
 1. Cerner Data Syndication API - https://docs.healtheintent.com/api/v1/data_syndication/
@@ -39,3 +41,6 @@ This repository contains a Python wrapper for a number of Cerner Open Code APIs
 
 **Personnel Group**
 : Personnel groups are sets of personnel who are grouped together to give them access to the same features or information. A personnel can belong to as many or as few personnel groups as necessary.
+
+**URL Structure**
+https://{tenant}.api.{region}.healtheintent.com/{api}/{version}/{resource}
