@@ -9,19 +9,23 @@ This repository contains a Python wrapper for a number of Cerner Open Code APIs
 3. Personnel API - https://docs.healtheintent.com/api/v1/personnel/
 
 
-## Definitions
+## Subclass Definitions
 
-**Feeds**
+###Feeds aka Data Syndication
+
+1. **Feeds**
 : The set of data that you want to receive on a schedule, for example, Longitudinal Record for population ABC.
 
-**Channels**
+2. **Channels**
 : Specifies that you want to receive a feed’s bundles using a particular channel type and provides any necessary configuration for the channel type. For example, a channel could specify that you want to receive your Longitudinal Record for Population ABC feed using the DOWNLOAD channel type.
 
-**Bundles**
+2. **Bundles**
 : The output of a feed, for example, Changes to the Longitudinal Record for population ABC between 2018-04-01 and 2018-04-02.
 
-**Deliveries**
+3. **Deliveries**
 : The status of delivering a particular bundle using a particular channel. For example, you would use the Deliveries endpoint to determine whether the archive file for changes to the Longitudinal Record for population ABC between 2018-04-01 and 2018-04-02 bundle is available for you to download.
+
+### Organization
 
 **Location**
 : A location represents a physical place with a single physical address, for example, a laboratory facility, practice site, hospital, or even a department within a hospital associated with an organization. Currently, personnel organizations and locations are not related in the API, but they will be in the future.
@@ -31,6 +35,8 @@ This repository contains a Python wrapper for a number of Cerner Open Code APIs
 
 **Organization Group**
 : Organization groups are sets of organizations that are grouped for a common purpose. For example, organizations can be grouped to apply a consistent scoring methodology across organizations of the same type, filter a report to a certain set of organizations, or display a group of organizations together in applications.
+
+### Personnel
 
 **Personnel and Organization Relationship**
 : A personnel can be a member or administrator of an organization, and some personnel may be both members and administrators of the same organization. Organization members typically are personnel who provide health care services to patients and whose financial performance and quality metrics contribute to the overall performance of the organization. Administrators are personnel who monitor and manage the activities and performance of their organizations.
@@ -42,5 +48,5 @@ This repository contains a Python wrapper for a number of Cerner Open Code APIs
 **Personnel Group**
 : Personnel groups are sets of personnel who are grouped together to give them access to the same features or information. A personnel can belong to as many or as few personnel groups as necessary.
 
-**URL Structure**
+####URL Structure
 https://{tenant}.api.{region}.healtheintent.com/{api}/{version}/{resource}
