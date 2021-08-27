@@ -19,7 +19,6 @@ class Healtheintent(object):
         self.personnel_group_member_id = None
         self.location_id = None
         self.body = None
-        #self.params = None
 
     def __send_request__(self, endpoint,
                          method = None, json = None, headers = None, params = None, data = None):
@@ -29,14 +28,18 @@ class Healtheintent(object):
                                 , params=params).json()
         elif method == 'DELETE':
             return requests.delete('{uri}{endpoint}'.format(uri=self.uri, endpoint=endpoint)
-                                   , headers=headers, params=params).json()
+                                   , headers=headers, params=params)
         elif method == 'POST':
             return requests.post('{uri}{endpoint}'.format(uri=self.uri, endpoint=endpoint),
                                    headers=headers, data=data, json=json)
+        elif method == 'PUT':
+            return requests.put('{uri}{endpoint}'.format(uri=self.uri, endpoint=endpoint),
+                                   headers=headers, params=params,data=data,json=json)
         else:
             return requests.get('{uri}{endpoint}'.format(uri=self.uri, endpoint=endpoint)
-                                , headers=headers, params=params)
-#Data Syndication Class      
+                                , headers=headers, data=data, json=json)
+
+#Data Syndication SubClass      
 class DataSyndication(Healtheintent):
 
     def get_feeds(self):
@@ -46,7 +49,8 @@ class DataSyndication(Healtheintent):
         return self.__send_request__(endpoint='data-syndication/v1/channels', method='GET', headers=self.headers)
 
     def get_channel_status(self, channel_id = None):
-        return self.__send_request__(endpoint='data-syndication/v1/channels/{channel_id}'.format(channel_id=channel_id), method='GET',
+        return self.__send_request__(endpoint='data-syndication/v1/channels/{channel_id}'.format(channel_id=channel_id),
+                                     method='GET',
                                      headers=self.headers)
 
     def get_channel_deliveries(self, channel_id = None):
@@ -72,97 +76,140 @@ class DataSyndication(Healtheintent):
         temp.close()
         os.chdir(wd)
 
-# IDENTITY DOMAIN
-# Personnel
+
+# Personnel Sub Class
 class Personnel(Healtheintent):
     def get_personnel(self):
         return self.__send_request__(endpoint='personnel/v1/personnel', method='GET'
                                      , headers=self.headers_op)
 
-    def create_personnel(self): # INCOMPLETE
-        return self.__send_request__(endpoint='personnel/v1', method='POST', headers=self.headers_op)
+    def create_personnel(self,data=None,json=None):
+        return self.__send_request__(endpoint='personnel/v1/personnel'.format(data=data,json=json)
+                                     , method='POST'
+                                     , headers=self.headers_op
+                                     , data=data
+                                     , json=json)
 
     def get_personnel_status(self, personnel_id = None):
-        return self.__send_request__(endpoint='personnel/v1/{personnel_id}'.format(personnel_id=personnel_id)
+        return self.__send_request__(endpoint='personnel/v1/personnel/{personnel_id}'.format(personnel_id=personnel_id)
                                      , method='GET'
                                      , headers=self.headers_op)
 
-    def update_personnel(self): # INCOMPLETE
-        return self.__send_request__(endpoint='personnel/v1', method='PUT', headers=self.headers_op)
+     def update_personnel(self, personnel_id=None, data=None, json=None):
+        return self.__send_request__(endpoint='personnel/v1/personnel/{personnel_id}'.format(personnel_id=personnel_id, data=data, json=json)
+                                     , method='PUT'
+                                     , headers=self.headers_op
+                                    , data=data
+                                    , json=json)
 
     def delete_personnel(self, personnel_id = None):
-        return self.__send_request__(endpoint='personnel/v1/{personnel_id}'.format(personnel_id=personnel_id)
+        return self.__send_request__(endpoint='personnel/v1/personnel/{personnel_id}'.format(personnel_id=personnel_id)
                                      , method='DELETE'
                                      , headers=self.headers_op)
 
     
-    #PERSONNEL GROUPS
+# Personnel Group Object
     def get_personnel_groups(self):
-        return self.__send_request__(endpoint='personnel/v1/personnel-groups', method='GET'
-                                     , headers=self.headers_op)
-
-    def create_personnel_group(self): # INCOMPLETE
-        return self.__send_request__(endpoint='personnel/v1', method='POST', headers=self.headers_op)
-
-    def get_personnel_group_status(self, personnel_group_id = None):
-        return self.__send_request__(endpoint='personnel/v1/{personnel_group_id}'.format(personnel_group_id=personnel_group_id)
+        return self.__send_request__(endpoint='personnel/v1/personnel-groups'
                                      , method='GET'
                                      , headers=self.headers_op)
 
-    def update_personnel_group(self, personnel_group_id = None): #INCOMPLETE
-        return self.__send_request__(endpoint='personnel/v1/{personnel_group_id}'.format(personnel_group_id=personnel_group_id)
-                                     , method='PUT'
+    def create_personnel_group(self, data=None, json=None):
+        return self.__send_request__(endpoint='personnel/v1/personnel-groups'.format(data=data,json=json)
+                                     , method='POST'
                                      , headers=self.headers_op)
 
+    def get_personnel_group_status(self, personnel_group_id = None):
+        return self.__send_request__(endpoint='personnel/v1/personnel-groups/{personnel_group_id}'.format(personnel_group_id=personnel_group_id)
+                                     , method='GET'
+                                     , headers=self.headers_op)
+
+    def update_personnel_group(self, personnel_group_id = None, data=None, json=None):
+        return self.__send_request__(endpoint='personnel/v1/personnel-groups/{personnel_group_id}'.format(personnel_group_id=personnel_group_id, data=data,json=json)
+                                     , method='PUT'
+                                     , headers=self.headers_op
+                                    , data=data
+                                    , json=json)
+
     def delete_personnel_group(self, personnel_group_id = None):
-        return self.__send_request__(endpoint='personnel/v1/{personnel_group_id}'.format(personnel_group_id=personnel_group_id)
+        return self.__send_request__(endpoint='personnel/v1/personnel-groups/{personnel_group_id}'.format(personnel_group_id=personnel_group_id)
                                      , method='DELETE'
                                      , headers=self.headers_op)
 
     def get_personnel_group_members(self, personnel_group_id = None):
-        return self.__send_request__(endpoint='personnel/v1/{personnel_group_id}/members'.format(personnel_group_id=personnel_group_id)
+        return self.__send_request__(endpoint='personnel/v1/personnel-groups/{personnel_group_id}/members'.format(personnel_group_id=personnel_group_id)
                                      , method='GET'
-                                     , headers=self.headers)
+                                     , headers=self.headers_op)
 
-    def add_personnel_group_members(self, personnel_group_id = None, personnel_group_member_id = None):
-        return self.__send_request__(endpoint='personnel/v1/{personnel_group_id}/members/{personnel_group_member_id}'
-                                     , method='PUT', headers=self.headers)
+    # Testing Required
+    def add_personnel_group_members(self, personnel_group_id = None, personnel_group_member_id = None, data=None, json=None):
+        return self.__send_request__(endpoint='personnel/v1/personnel-groups/{personnel_group_id}/members/{personnel_group_member_id}'
+                                     , method='PUT'
+                                     , headers=self.headers_op
+                                    , data=data
+                                    , json=json)
 
     def delete_personnel_group_members(self, personnel_group_id = None, personnel_group_member_id = None):
         return self.__send_request__(endpoint='personnel/v1/{personnel_group_id}/members/{personnel_group_member_id}'
-                                     , method='DELETE', headers=self.headers)
+                                     , method='DELETE'
+                                     , headers=self.headers_op)
 
+
+# Organization Sub Class Commands
 class Organization(Healtheintent):
-    # ORGANIZATIONS
-    def get_organizations(self,params=None):
+    
+    def get_organization(self,params=None):
         return self.__send_request__(endpoint='organization/v1/organizations'.format(params=params)
                                      , method='GET'
                                      , headers=self.headers_op)
-    def create_organizations(self,data=None,json=None):
+    
+    def create_organization(self,data=None,json=None):
         return self.__send_request__(endpoint='organization/v1/organizations'.format(data=data, json=json)
                                      , method='POST'
                                      , headers=self.headers_op
                                      , data=data
-                                     ,json=json)
+                                     , json=json)
     
-    # Locations
+    def delete_organization(self, organization_id = None):
+        return self.__send_request__(endpoint='organization/v1/organizations/{organization_id}'.format(organization_id=organization_id)
+                                     , method='DELETE'
+                                     , headers=self.headers_op)
+    
+    def update_organization(self, organization_id = None, data=None, json=None):
+        return self.__send_request__(endpoint='organization/v1/organizations/{organization_id}'.format(organization_id=organization_id,data=data,json=json)
+                                     , method='PUT'
+                                     , headers=self.headers_op
+                                    , data=data
+                                    , json=json)
+    
+    
+    # Location Object Commands
     def get_locations(self):
-        return self.__send_request__(endpoint='organization/v1/locations', method='GET'
+        return self.__send_request__(endpoint='organization/v1/locations'
+                                     , method='GET'
                                      , headers=self.headers_op)
 
-    def create_location(self):
-        return self.__send_request__(endpoint='organization/v1/locations', method='POST'
-                                     , headers=self.headers_op)
-
+    def create_location(self,data=None,json=None):
+        return self.__send_request__(endpoint='organization/v1/locations'.format(data=data, json=json)
+                                     , method='POST'
+                                     , headers=self.headers_op
+                                     , data=data
+                                     , json=json)
+    
     def get_location_status(self, location_id = None):
-        return self.__send_request__(endpoint='organization/v1/{location_id}'.format(location_id=location_id)
-                                     , method='GET', headers=self.headers_op)
+        return self.__send_request__(endpoint='organization/v1/locations/{location_id}'.format(location_id=location_id)
+                                     , method='GET'
+                                     , headers=self.headers_op)
 
-    def update_location(self, location_id = None):
-        return self.__send_request__(endpoint='organization/v1/{location_id}'.format(location_id=location_id)
-                                     , method='PUT', headers=self.headers_op)
+    def update_location(self, location_id = None, data=None, json= None):
+        return self.__send_request__(endpoint='organization/v1/locations/{location_id}'.format(location_id=location_id,data=data,json=json)
+                                     , method='PUT'
+                                     , headers=self.headers_op
+                                    , data=data
+                                    , json=json)
 
     def delete_location(self, location_id = None):
-        return self.__send_request__(endpoint='organization/v1/{location_id}'.format(location_id=location_id)
-                                     , method='DELETE', headers=self.headers_op)
+        return self.__send_request__(endpoint='organization/v1/locations/{location_id}'.format(location_id=location_id)
+                                     , method='DELETE'
+                                     , headers=self.headers_op)
 
