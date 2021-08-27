@@ -49,4 +49,4 @@ This repository contains a Python wrapper for a number of Cerner Open Code APIs
 : Personnel groups are sets of personnel who are grouped together to give them access to the same features or information. A personnel can belong to as many or as few personnel groups as necessary.
 
 #### URL Structure
-https://{tenant}.api.{region}.healtheintent.com/{api}/{version}/{resource}
+>https://{tenant}.api.{region}.healtheintent.com/{api}/{version}/{resource}
