@@ -95,7 +95,8 @@ class Personnel(Healtheintent):
                                      , method='GET'
                                      , headers=self.headers_op)
 
-    def update_personnel(self, personnel_id=None, data=None, json=None):return self.__send_request__(endpoint='personnel/v1/personnel/{personnel_id}'.format(personnel_id=personnel_id, data=data, json=json)
+    def update_personnel(self, personnel_id=None, data=None, json=None):
+        return self.__send_request__(endpoint='personnel/v1/personnel/{personnel_id}'.format(personnel_id=personnel_id, data=data, json=json)
                                      , method='PUT', headers=self.headers_op, data=data, json=json)
 
     def delete_personnel(self, personnel_id = None):
