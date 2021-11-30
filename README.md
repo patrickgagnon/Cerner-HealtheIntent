@@ -50,3 +50,27 @@ This repository contains a Python wrapper for a number of Cerner Open Code APIs
 
 #### URL Structure
 >https://{tenant}.api.{region}.healtheintent.com/{api}/{version}/{resource}
+
+# Prerequisites
+A settings.py file is required for this wrapper to work. This file should contain the variable BEARER_HEADER as the Authorization Bearer header.
+
+# Installation 
+```
+!pip install Cerner-HealtheIntent
+```
+# Import
+```
+import healthetintentAPI as h
+```
+# Usage
+```
+o = h.Organization()
+print(o.get_organization())
+```
+```
+p = h.Personnel()
+print(p.get_personnel())
+```
+
+
+
